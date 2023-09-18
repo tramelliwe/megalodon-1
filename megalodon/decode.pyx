@@ -1146,11 +1146,12 @@ cdef float get_best_flipflop_path_core(
     cdef float[::1] curr = np.empty(window_width, dtype=np.float32)
 
     # cumsum over stay in first seq pos to init prev
-    prev[0] = tpost[0, stay_idx]
+
     tb[0, 0] = 0
     # always start in flip base
     cdef int prev_ff_base = seq[0]
     cdef int stay_idx = prev_ff_base * (nbase + nbase) + prev_ff_base
+    prev[0] = tpost[0, stay_idx]
     cdef int win_pos
     for win_pos in range(1, window_width):
         prev[win_pos] = prev[win_pos - 1] + tpost[win_pos, stay_idx]
